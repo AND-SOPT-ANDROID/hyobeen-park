@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">AND-ANDROID</string>
 
+    <!-- Component -->
+    <string name="password_textfield_show">show</string>
+    <string name="password_textfield_hide">hide</string>
+
     <!-- Sign Up -->
     <string name="sign_up_main_title">회원가입</string>
     <string name="sign_up_title_email_and_password">이메일과 비밀번호</string>
@@ -19,4 +23,8 @@
         SNS계정으로 간편하게 가입하여 서비스를 이용하실 수 있습니다.
         기존 POOQ 계정 또는 Wavve 계정과는 연동되지 않으니 이용에 참고하세요.
     </string>
+
+    <string name="img_email">email</string>
+    <string name="img_password">password</string>
+    <string name="img_social_login">social login</string>
 </resources>
