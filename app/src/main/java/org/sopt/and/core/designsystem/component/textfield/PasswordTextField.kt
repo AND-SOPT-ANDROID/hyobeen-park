@@ -58,7 +58,7 @@ fun PasswordTextField(
                         isVisible.value = !isVisible.value
                     }
                     .padding(end = 10.dp),
-                color = Color.Gray,
+                color = Color.White,
             )
         }
     )
