@@ -1,6 +1,5 @@
 package org.sopt.and.feature.signin
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -55,10 +54,12 @@ fun SignInRoute(
     LaunchedEffect(viewModel.signInSideEffect, lifecycleOwner) {
         viewModel.signInSideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
             .collect { sideEffect ->
-                Log.d("test", sideEffect.toString())
                 when (sideEffect) {
-                    is SignInSideEffect.ShowToast -> context.toast(sideEffect.message)
-                    is SignInSideEffect.ShowSnackBar -> { }
+                    is SignInSideEffect.ShowToast -> {
+                        context.toast(sideEffect.message)
+                    }
+
+                    is SignInSideEffect.ShowSnackBar -> {}
                     is SignInSideEffect.NavigateToSignUp -> navigateToSignUp()
                     is SignInSideEffect.NavigateToMyPage -> {
                         navigateToMyPage(signInState.email, signInState.password)
@@ -69,7 +70,7 @@ fun SignInRoute(
 
     SignInScreen(
         onSignUpButtonClick = viewModel::onSignUpButtonClick,
-        onLoginButtonClick = viewModel::onLoginButtonClick,
+        onSignInButtonClick = viewModel::onLoginButtonClick,
         onIdChange = viewModel::updateEmail,
         onPasswordChange = viewModel::updatePassword,
         modifier = modifier,
@@ -78,7 +79,7 @@ fun SignInRoute(
 
 @Composable
 fun SignInScreen(
-    onLoginButtonClick: (String, String) -> Unit,
+    onSignInButtonClick: (String, String) -> Unit,
     onSignUpButtonClick: () -> Unit,
     onIdChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
@@ -113,7 +114,7 @@ fun SignInScreen(
 
         Button(
             onClick = {
-                onLoginButtonClick(email.value, password.value)
+                onSignInButtonClick(email.value, password.value)
             },
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier
@@ -224,7 +225,7 @@ fun SignInPreview() {
     ANDANDROIDTheme {
         SignInScreen(
             onSignUpButtonClick = { },
-            onLoginButtonClick = TODO(),
+            onSignInButtonClick = TODO(),
             onIdChange = TODO(),
             onPasswordChange = TODO(),
             modifier = TODO(),

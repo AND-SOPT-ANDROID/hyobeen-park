@@ -55,6 +55,7 @@ fun SignUpRoute(
                 when (sideEffect) {
                     is SignUpSideEffect.Toast -> context.toast(sideEffect.message)
                     is SignUpSideEffect.NavigateToSignIn -> {
+                        context.toast(R.string.sign_up_success)
                         navigateToSignIn(signUpState.email, signUpState.password)
                     }
                 }

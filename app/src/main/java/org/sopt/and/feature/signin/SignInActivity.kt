@@ -2,7 +2,6 @@ package org.sopt.and.feature.signin
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,8 +14,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import org.sopt.and.R
 import org.sopt.and.core.designsystem.component.topappbar.BackButtonTopAppBar
 import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
+import org.sopt.and.core.extension.toast
 import org.sopt.and.feature.mypage.MyPageActivity
 import org.sopt.and.feature.signup.SignUpActivity
 
@@ -30,9 +31,6 @@ class SignInActivity : ComponentActivity() {
 
     val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            Log.d("test", result.resultCode.toString())
-            Log.d("test", result.toString())
-            Log.d("test", result.data?.getStringExtra(ID_KEY).toString())
             if (result.resultCode == RESULT_OK) {
                 userId = result.data?.getStringExtra(ID_KEY) ?: ""
                 userPassword = result.data?.getStringExtra(PASSWORD_KEY) ?: ""
@@ -69,10 +67,11 @@ class SignInActivity : ComponentActivity() {
                                     finish()
                                 }
                             } else {
+                                this.toast(R.string.sign_in_failed)
                                 coroutine.launch {
                                     snackbarHostState.showSnackbar(
-                                        "아이디 확인",
-                                        "확인"
+                                        message = this@SignInActivity.getString(R.string.sign_in_failed),
+                                        actionLabel = this@SignInActivity.getString(R.string.sign_in_failed),
                                     )
                                 }
                             }
@@ -85,6 +84,9 @@ class SignInActivity : ComponentActivity() {
         }
     }
 
-    private fun isSignInAvailable(email: String, password: String): Boolean =
-        email.isNotBlank() && password.isNotBlank() && email == userId && password == userPassword
+    private fun isSignInAvailable(email: String, password: String): Boolean {
+        val isEmailValid = email.isNotBlank() && email == userId
+        val isPasswordValid = password.isNotBlank() && password == userPassword
+        return isEmailValid && isPasswordValid
+    }
 }

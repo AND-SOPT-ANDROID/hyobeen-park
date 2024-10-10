@@ -26,6 +26,7 @@
 
     <string name="sign_up_not_valid_email">이메일 형식으로 입력해주세요.</string>
     <string name="sign_up_not_valid_password">비밀번호는 8~20자 이내로 영문 대소문자, 숫자, 특수문자 중 3가지 이상 혼용하여 입력해 주세요.</string>
+    <string name="sign_up_success">회원가입을 완료했습니다!</string>
 
     <!-- Sign In -->
     <string name="sign_in">로그인</string>
@@ -34,6 +35,7 @@
     <string name="sign_in_find_id">아이디 찾기</string>
     <string name="sign_in_change_password">비밀번호 재설정</string>
     <string name="sign_in_failed">아이디와 비밀번호를 확인해주세요.</string>
+    <string name="sign_in_success">로그인을 성공했습니다!</string>
 
     <string name="img_email">email</string>
     <string name="img_password">password</string>
