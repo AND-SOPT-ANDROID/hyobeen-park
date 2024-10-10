@@ -24,6 +24,9 @@
         기존 POOQ 계정 또는 Wavve 계정과는 연동되지 않으니 이용에 참고하세요.
     </string>
 
+    <string name="sign_up_not_valid_email">이메일 형식으로 입력해주세요.</string>
+    <string name="sign_up_not_valid_password">비밀번호는 8~20자 이내로 영문 대소문자, 숫자, 특수문자 중 3가지 이상 혼용하여 입력해 주세요.</string>
+
     <!-- Sign In -->
     <string name="sign_in">로그인</string>
     <string name="sign_in_email">이메일 주소 또는 아이디</string>
