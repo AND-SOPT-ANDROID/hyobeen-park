@@ -30,10 +30,13 @@ import org.sopt.and.R
 import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
 import org.sopt.and.feature.mypage.component.MyPageContent
 import org.sopt.and.feature.mypage.component.MyPageTextButton
+import org.sopt.and.feature.signin.ID_KEY
 
 @AndroidEntryPoint
 class MyPageActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        val email = intent.getStringExtra(ID_KEY) ?: ""
+
         super.onCreate(savedInstanceState)
         setContent {
             ANDANDROIDTheme {
@@ -41,6 +44,7 @@ class MyPageActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) { innerPadding ->
                     MyPageScreen(
+                        email = email,
                         modifier = Modifier
                             .padding(innerPadding)
                     )
@@ -52,6 +56,7 @@ class MyPageActivity : ComponentActivity() {
 
 @Composable
 fun MyPageScreen(
+    email: String,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -78,7 +83,7 @@ fun MyPageScreen(
                         .clip(CircleShape)
                 )
                 Text(
-                    text = "테스트",
+                    text = stringResource(R.string.my_page_name, email),
                     fontSize = 16.sp,
                     color = Color.White,
                     modifier = Modifier
@@ -137,6 +142,6 @@ fun MyPagePreview(
 
 ) {
     ANDANDROIDTheme {
-        MyPageScreen()
+        MyPageScreen("")
     }
 }
