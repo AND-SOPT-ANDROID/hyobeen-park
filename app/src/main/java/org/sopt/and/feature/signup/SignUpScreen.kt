@@ -63,6 +63,8 @@ fun SignUpRoute(
 
     SignUpScreen(
         onSignUpButtonClick = viewModel::onSignUpClick,
+        onIdChange = viewModel::updateEmail,
+        onPasswordChange = viewModel::updatePassword,
         modifier = modifier,
     )
 
@@ -71,6 +73,8 @@ fun SignUpRoute(
 @Composable
 fun SignUpScreen(
     onSignUpButtonClick: (String, String) -> Unit,
+    onIdChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val email = remember { mutableStateOf("") }
@@ -102,6 +106,7 @@ fun SignUpScreen(
         EmailTextField(
             email = email,
             placeholder = stringResource(R.string.sign_up_email_hint),
+            onValueChange = onIdChange,
             modifier = Modifier
                 .padding(top = 30.dp)
                 .padding(horizontal = 20.dp)
@@ -130,6 +135,7 @@ fun SignUpScreen(
             password = password,
             placeholder = stringResource(R.string.sign_up_password_hint),
             isVisible = isPasswordVisible,
+            onValueChange = onPasswordChange,
             modifier = Modifier
                 .padding(top = 10.dp)
                 .padding(horizontal = 20.dp),
@@ -245,7 +251,9 @@ fun SignInPreview() {
     ANDANDROIDTheme {
         SignUpScreen(
             onSignUpButtonClick = TODO(),
-            modifier = TODO()
+            modifier = TODO(),
+            onIdChange = TODO(),
+            onPasswordChange = TODO()
         )
     }
 }

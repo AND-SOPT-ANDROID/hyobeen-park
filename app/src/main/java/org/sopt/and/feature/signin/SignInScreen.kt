@@ -1,5 +1,6 @@
 package org.sopt.and.feature.signin
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -41,10 +42,8 @@ import org.sopt.and.core.extension.toast
 
 @Composable
 fun SignInRoute(
-    email: String = "",
-    password: String = "",
     navigateToSignUp: () -> Unit,
-    navigateToMyPage: (String) -> Unit,
+    navigateToMyPage: (String, String) -> Unit,
     viewModel: SignInViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
 ) {
@@ -53,20 +52,16 @@ fun SignInRoute(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    LaunchedEffect(true) {
-        viewModel.updateEmail(email)
-        viewModel.updatePassword(password)
-    }
-
     LaunchedEffect(viewModel.signInSideEffect, lifecycleOwner) {
         viewModel.signInSideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
             .collect { sideEffect ->
+                Log.d("test", sideEffect.toString())
                 when (sideEffect) {
                     is SignInSideEffect.ShowToast -> context.toast(sideEffect.message)
-                    is SignInSideEffect.ShowSnackBar -> {}
+                    is SignInSideEffect.ShowSnackBar -> { }
                     is SignInSideEffect.NavigateToSignUp -> navigateToSignUp()
                     is SignInSideEffect.NavigateToMyPage -> {
-                        navigateToMyPage(signInState.email)
+                        navigateToMyPage(signInState.email, signInState.password)
                     }
                 }
             }
@@ -75,6 +70,8 @@ fun SignInRoute(
     SignInScreen(
         onSignUpButtonClick = viewModel::onSignUpButtonClick,
         onLoginButtonClick = viewModel::onLoginButtonClick,
+        onIdChange = viewModel::updateEmail,
+        onPasswordChange = viewModel::updatePassword,
         modifier = modifier,
     )
 }
@@ -83,6 +80,8 @@ fun SignInRoute(
 fun SignInScreen(
     onLoginButtonClick: (String, String) -> Unit,
     onSignUpButtonClick: () -> Unit,
+    onIdChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val email = remember { mutableStateOf("") }
@@ -97,6 +96,7 @@ fun SignInScreen(
         EmailTextField(
             email = email,
             placeholder = stringResource(R.string.sign_in_email),
+            onValueChange = onIdChange,
             modifier = Modifier
                 .padding(top = 50.dp)
                 .padding(horizontal = 20.dp),
@@ -105,13 +105,16 @@ fun SignInScreen(
             password = password,
             placeholder = stringResource(R.string.sign_in_password),
             isVisible = isPasswordVisible,
+            onValueChange = onPasswordChange,
             modifier = Modifier
                 .padding(top = 5.dp)
                 .padding(horizontal = 20.dp),
         )
 
         Button(
-            onClick = {},
+            onClick = {
+                onLoginButtonClick(email.value, password.value)
+            },
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier
                 .fillMaxWidth()
@@ -222,6 +225,9 @@ fun SignInPreview() {
         SignInScreen(
             onSignUpButtonClick = { },
             onLoginButtonClick = TODO(),
+            onIdChange = TODO(),
+            onPasswordChange = TODO(),
+            modifier = TODO(),
         )
     }
 }

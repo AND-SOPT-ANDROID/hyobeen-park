@@ -39,8 +39,6 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
             } else if (!isPasswordValid(password)) {
                 _signUpSideEffect.emit(SignUpSideEffect.Toast(R.string.sign_up_not_valid_password))
             } else {
-                updateEmail(email)
-                updatePassword(password)
                 _signUpSideEffect.emit(SignUpSideEffect.NavigateToSignIn)
             }
         }

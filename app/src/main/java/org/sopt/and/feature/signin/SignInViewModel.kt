@@ -1,5 +1,6 @@
 package org.sopt.and.feature.signin
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,13 @@ class SignInViewModel @Inject constructor() : ViewModel() {
 
     fun onLoginButtonClick(email: String, password: String) {
         viewModelScope.launch {
-            _signInSideEffect.emit(SignInSideEffect.NavigateToMyPage)
+            Log.d("test", _signInState.value.email)
+            if (email.isNotBlank() && password.isNotBlank() && email == _signInState.value.email && password == _signInState.value.password) {
+                Log.d("test", _signInState.value.email)
+                _signInSideEffect.emit(SignInSideEffect.NavigateToMyPage)
+            } else {
+                _signInSideEffect.emit(SignInSideEffect.ShowSnackBar("아이디와 비밀번호를 확인해주세요."))
+            }
         }
     }
 

@@ -33,6 +33,7 @@
     <string name="sign_in_password">비밀번호</string>
     <string name="sign_in_find_id">아이디 찾기</string>
     <string name="sign_in_change_password">비밀번호 재설정</string>
+    <string name="sign_in_failed">아이디와 비밀번호를 확인해주세요.</string>
 
     <string name="img_email">email</string>
     <string name="img_password">password</string>

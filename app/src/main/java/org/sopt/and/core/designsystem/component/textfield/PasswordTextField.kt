@@ -22,13 +22,17 @@ fun PasswordTextField(
     password: MutableState<String>,
     placeholder: String,
     isVisible: MutableState<Boolean>,
+    onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth(),
         value = password.value,
-        onValueChange = { newValue -> password.value = newValue },
+        onValueChange = { newValue ->
+            password.value = newValue
+            onValueChange(newValue)
+        },
         placeholder = {
             Text(
                 text = placeholder,

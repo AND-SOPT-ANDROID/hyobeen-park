@@ -15,13 +15,17 @@ import androidx.compose.ui.unit.dp
 fun EmailTextField(
     email: MutableState<String>,
     placeholder: String,
+    onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth(),
         value = email.value,
-        onValueChange = { newValue -> email.value = newValue },
+        onValueChange = { newValue ->
+            email.value = newValue
+            onValueChange(newValue)
+        },
         placeholder = {
             Text(
                 text = placeholder,

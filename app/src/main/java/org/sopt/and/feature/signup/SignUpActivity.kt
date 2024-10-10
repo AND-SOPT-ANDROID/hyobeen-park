@@ -34,10 +34,10 @@ class SignUpActivity : ComponentActivity() {
                 ) { innerPadding ->
                     SignUpRoute(
                         navigateToSignIn = { email, password ->
-                            Intent(this, SignInActivity::class.java).apply {
+                            intent.apply {
                                 putExtra(ID_KEY, email)
                                 putExtra(PASSWORD_KEY, password)
-                                setResult(RESULT_OK)
+                                setResult(RESULT_OK, this)
                                 finish()
                             }
                         },

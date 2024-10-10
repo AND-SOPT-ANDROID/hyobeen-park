@@ -25,11 +25,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.and.R
 import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
 import org.sopt.and.feature.mypage.component.MyPageContent
 import org.sopt.and.feature.mypage.component.MyPageTextButton
 
+@AndroidEntryPoint
 class MyPageActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
