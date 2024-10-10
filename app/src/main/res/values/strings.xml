@@ -34,4 +34,14 @@
     <string name="img_email">email</string>
     <string name="img_password">password</string>
     <string name="img_social_login">social login</string>
+    
+    <!-- My page -->
+    <string name="my_page_name">%s님</string>
+    <string name="my_page_purchase">구매하기</string>
+    <string name="my_page_purchase_content_1">첫 결제 시 첫 달 100원!</string>
+    <string name="my_page_purchase_content_2">현재 보유하신 이용권이 없습니다.</string>
+    <string name="my_page_title_1">전체 시청 내역</string>
+    <string name="my_page_title_2">관심 프로그램</string>
+    <string name="my_page_content_1">시청 내역이 없어요.</string>
+    <string name="my_page_content_2">관심 프로그램이 없어요.</string>
 </resources>
