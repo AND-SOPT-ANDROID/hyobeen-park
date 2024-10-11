@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -17,7 +18,6 @@ import kotlinx.coroutines.launch
 import org.sopt.and.R
 import org.sopt.and.core.designsystem.component.topappbar.BackButtonTopAppBar
 import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
-import org.sopt.and.core.extension.toast
 import org.sopt.and.feature.mypage.MyPageActivity
 import org.sopt.and.feature.signup.SignUpActivity
 
@@ -52,12 +52,16 @@ class SignInActivity : ComponentActivity() {
                         BackButtonTopAppBar(
                             onBackClick = {},
                         )
+                    },
+                    snackbarHost = {
+                        SnackbarHost(hostState = snackbarHostState)
                     }
                 ) { innerPadding ->
                     SignInRoute(
                         navigateToSignUp = {
-                            val intent = Intent(this, SignUpActivity::class.java)
-                            resultLauncher.launch(intent)
+                            Intent(this, SignUpActivity::class.java).apply {
+                                resultLauncher.launch(this)
+                            }
                         },
                         navigateToMyPage = { email, password ->
                             if (isSignInAvailable(email, password)) {
@@ -67,11 +71,9 @@ class SignInActivity : ComponentActivity() {
                                     finish()
                                 }
                             } else {
-                                this.toast(R.string.sign_in_failed)
                                 coroutine.launch {
                                     snackbarHostState.showSnackbar(
                                         message = this@SignInActivity.getString(R.string.sign_in_failed),
-                                        actionLabel = this@SignInActivity.getString(R.string.sign_in_failed),
                                     )
                                 }
                             }
