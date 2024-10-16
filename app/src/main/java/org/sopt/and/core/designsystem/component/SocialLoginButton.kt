@@ -4,7 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,17 +32,14 @@ fun SocialLoginButton(
         modifier = modifier
             .fillMaxWidth(),
     ) {
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            items(4) { image ->
-                Image(
-                    painter = painterResource(snsImageList[image]),
-                    contentDescription = stringResource(R.string.img_social_login),
-                    modifier = Modifier
-                        .clip(shape = CircleShape)
-                )
-            }
+        for (index in 0..3) {
+            Image(
+                painter = painterResource(snsImageList[index]),
+                contentDescription = stringResource(R.string.img_social_login),
+                modifier = Modifier
+                    .padding(horizontal = 10.dp)
+                    .clip(shape = CircleShape)
+            )
         }
     }
 }
