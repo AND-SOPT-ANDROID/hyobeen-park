@@ -20,18 +20,6 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
     private val _signUpSideEffect = MutableSharedFlow<SignUpSideEffect>()
     val signUpSideEffect get() = _signUpSideEffect.asSharedFlow()
 
-    companion object {
-        private const val PASSWORD_LENGTH_MIN = 8
-        private const val PASSWORD_LENGTH_MAX = 20
-        private const val PASSWORD_TYPE = 3
-
-        const val EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$"
-        const val UPPER_CASE_REGEX = "[A-Z]"
-        const val LOWER_CASE_REGEX = "[a-z]"
-        const val NUMBER_REGEX = "[0-9]"
-        const val SPECIAL_CHAR_REGEX = "[!@#\$%^&*(),.?\":{}|<>]"
-    }
-
     fun onSignUpClick(email: String, password: String) {
         viewModelScope.launch {
             if (!isEmailValid(email)) {
@@ -42,7 +30,6 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
                 _signUpSideEffect.emit(SignUpSideEffect.NavigateToSignIn)
             }
         }
-
     }
 
     private fun isEmailValid(email: String): Boolean =
@@ -77,4 +64,15 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    companion object {
+        private const val PASSWORD_LENGTH_MIN = 8
+        private const val PASSWORD_LENGTH_MAX = 20
+        private const val PASSWORD_TYPE = 3
+
+        const val EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$"
+        const val UPPER_CASE_REGEX = "[A-Z]"
+        const val LOWER_CASE_REGEX = "[a-z]"
+        const val NUMBER_REGEX = "[0-9]"
+        const val SPECIAL_CHAR_REGEX = "[!@#\$%^&*(),.?\":{}|<>]"
+    }
 }

@@ -225,10 +225,10 @@ fun SignInPreview() {
     ANDANDROIDTheme {
         SignInScreen(
             onSignUpButtonClick = { },
-            onSignInButtonClick = TODO(),
-            onIdChange = TODO(),
-            onPasswordChange = TODO(),
-            modifier = TODO(),
+            onSignInButtonClick = {_, _-> },
+            onIdChange = { },
+            onPasswordChange = { },
+            modifier = Modifier,
         )
     }
 }
