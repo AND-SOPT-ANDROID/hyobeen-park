@@ -10,11 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -145,9 +145,9 @@ fun SignInScreen(
                 modifier = Modifier
                     .padding(horizontal = 8.dp),
             )
-            Box(
+            VerticalDivider(
                 modifier = Modifier
-                    .size(width = 1.dp, height = 10.dp)
+                    .height(10.dp)
                     .background(Color.Gray)
             )
             Text(
@@ -157,9 +157,9 @@ fun SignInScreen(
                 modifier = Modifier
                     .padding(horizontal = 8.dp),
             )
-            Box(
+            VerticalDivider(
                 modifier = Modifier
-                    .size(width = 1.dp, height = 10.dp)
+                    .height(10.dp)
                     .background(Color.Gray)
             )
             Text(
@@ -225,7 +225,7 @@ fun SignInPreview() {
     ANDANDROIDTheme {
         SignInScreen(
             onSignUpButtonClick = { },
-            onSignInButtonClick = {_, _-> },
+            onSignInButtonClick = { _, _ -> },
             onIdChange = { },
             onPasswordChange = { },
             modifier = Modifier,
