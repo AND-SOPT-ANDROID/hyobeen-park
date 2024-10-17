@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -31,7 +32,9 @@ fun MyPageTextButton(
             fontSize = 16.sp,
             color = Color.Gray,
         )
-        Row {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             Text(
                 text = stringResource(R.string.my_page_purchase),
                 fontSize = 16.sp,
