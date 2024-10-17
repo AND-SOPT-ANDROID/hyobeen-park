@@ -251,10 +251,10 @@ private fun SignUpTitle(
 fun SignInPreview() {
     ANDANDROIDTheme {
         SignUpScreen(
-            onSignUpButtonClick = TODO(),
-            modifier = TODO(),
-            onIdChange = TODO(),
-            onPasswordChange = TODO()
+            onSignUpButtonClick = {_, _ -> },
+            modifier = Modifier,
+            onIdChange = { },
+            onPasswordChange = { }
         )
     }
 }
