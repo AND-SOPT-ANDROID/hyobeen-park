@@ -18,7 +18,6 @@ fun EmailTextField(
     email: String,
     hint: String,
     onValueChange: (String) -> Unit,
-    onNextAction: () -> Unit,
     cursorBrush: Brush = SolidColor(Color.White),
     modifier: Modifier = Modifier,
 ) {
@@ -32,7 +31,6 @@ fun EmailTextField(
         imeAction = ImeAction.Next,
         onNextAction = {
             focusManager.moveFocus(FocusDirection.Down)
-            onNextAction()
         },
         modifier = modifier
             .clip(RoundedCornerShape(5.dp))

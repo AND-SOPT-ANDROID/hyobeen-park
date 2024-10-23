@@ -107,7 +107,6 @@ fun SignUpScreen(
             modifier = Modifier
                 .padding(top = 30.dp)
                 .padding(horizontal = 20.dp),
-            onNextAction = {}
         )
 
         Row(

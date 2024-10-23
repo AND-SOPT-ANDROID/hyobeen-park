@@ -97,7 +97,6 @@ fun SignInScreen(
             modifier = Modifier
                 .padding(top = 50.dp)
                 .padding(horizontal = 20.dp),
-            onNextAction = {},
         )
         PasswordTextField(
             password = signInState.password,

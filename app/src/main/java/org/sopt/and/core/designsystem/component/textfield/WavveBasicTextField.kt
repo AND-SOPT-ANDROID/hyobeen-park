@@ -42,7 +42,7 @@ fun WavveBasicTextField(
     onValueChange: (String) -> Unit = {},
     onDoneAction: () -> Unit? = {},
     onSearchAction: () -> Unit? = {},
-    onNextAction: () -> Unit? = {},
+    onNextAction: () -> Boolean = { false },
 ) {
     BasicTextField(
         value = value,
