@@ -18,8 +18,6 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -73,49 +71,46 @@ fun SignInRoute(
         onSignInButtonClick = viewModel::onLoginButtonClick,
         onIdChange = viewModel::updateEmail,
         onPasswordChange = viewModel::updatePassword,
+        signInState = signInState,
         modifier = modifier,
     )
 }
 
 @Composable
 fun SignInScreen(
-    onSignInButtonClick: (String, String) -> Unit,
+    onSignInButtonClick: () -> Unit,
     onSignUpButtonClick: () -> Unit,
     onIdChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
+    signInState: SignInState,
     modifier: Modifier = Modifier,
 ) {
-    val email = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
-    val isPasswordVisible = remember { mutableStateOf(false) }
-
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(Color.Black),
     ) {
         EmailTextField(
-            email = email,
-            placeholder = stringResource(R.string.sign_in_email),
+            email = signInState.email,
+            hint = stringResource(R.string.sign_in_email),
             onValueChange = onIdChange,
             modifier = Modifier
                 .padding(top = 50.dp)
                 .padding(horizontal = 20.dp),
+            onNextAction = {},
         )
         PasswordTextField(
-            password = password,
-            placeholder = stringResource(R.string.sign_in_password),
-            isVisible = isPasswordVisible,
+            password = signInState.password,
+            hint = stringResource(R.string.sign_in_password),
             onValueChange = onPasswordChange,
             modifier = Modifier
                 .padding(top = 5.dp)
                 .padding(horizontal = 20.dp),
+            onDoneAction = onSignInButtonClick
         )
 
         Button(
-            onClick = {
-                onSignInButtonClick(email.value, password.value)
-            },
+            onClick = onSignInButtonClick,
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier
                 .fillMaxWidth()
@@ -225,9 +220,10 @@ fun SignInPreview() {
     ANDANDROIDTheme {
         SignInScreen(
             onSignUpButtonClick = { },
-            onSignInButtonClick = { _, _ -> },
+            onSignInButtonClick = { },
             onIdChange = { },
             onPasswordChange = { },
+            signInState = SignInState(),
             modifier = Modifier,
         )
     }

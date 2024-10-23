@@ -19,7 +19,7 @@ class SignInViewModel @Inject constructor() : ViewModel() {
     private val _signInSideEffect = MutableSharedFlow<SignInSideEffect>()
     val signInSideEffect get() = _signInSideEffect.asSharedFlow()
 
-    fun onLoginButtonClick(email: String, password: String) {
+    fun onLoginButtonClick() {
         viewModelScope.launch {
             _signInSideEffect.emit(SignInSideEffect.NavigateToMyPage)
         }

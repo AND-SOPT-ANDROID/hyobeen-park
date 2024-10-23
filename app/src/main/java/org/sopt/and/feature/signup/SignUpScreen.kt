@@ -15,8 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -67,21 +65,19 @@ fun SignUpRoute(
         onIdChange = viewModel::updateEmail,
         onPasswordChange = viewModel::updatePassword,
         modifier = modifier,
+        signUpState = signUpState,
     )
 
 }
 
 @Composable
 fun SignUpScreen(
-    onSignUpButtonClick: (String, String) -> Unit,
+    onSignUpButtonClick: () -> Unit,
     onIdChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    signUpState: SignUpState,
 ) {
-    val email = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
-    val isPasswordVisible = remember { mutableStateOf(false) }
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -105,12 +101,13 @@ fun SignUpScreen(
         )
 
         EmailTextField(
-            email = email,
-            placeholder = stringResource(R.string.sign_up_email_hint),
+            email = signUpState.email,
+            hint = stringResource(R.string.sign_up_email_hint),
             onValueChange = onIdChange,
             modifier = Modifier
                 .padding(top = 30.dp)
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = 20.dp),
+            onNextAction = {}
         )
 
         Row(
@@ -133,13 +130,13 @@ fun SignUpScreen(
         }
 
         PasswordTextField(
-            password = password,
-            placeholder = stringResource(R.string.sign_up_password_hint),
-            isVisible = isPasswordVisible,
+            password = signUpState.password,
+            hint = stringResource(R.string.sign_up_password_hint),
             onValueChange = onPasswordChange,
             modifier = Modifier
                 .padding(top = 10.dp)
                 .padding(horizontal = 20.dp),
+            onDoneAction = onSignUpButtonClick,
         )
 
         Row(
@@ -217,7 +214,7 @@ fun SignUpScreen(
                 .background(Color.Gray)
                 .fillMaxWidth()
                 .clickable {
-                    onSignUpButtonClick(email.value, password.value)
+                    onSignUpButtonClick()
                 }
                 .padding(vertical = 10.dp)
         )
@@ -251,10 +248,11 @@ private fun SignUpTitle(
 fun SignInPreview() {
     ANDANDROIDTheme {
         SignUpScreen(
-            onSignUpButtonClick = {_, _ -> },
+            onSignUpButtonClick = { },
             modifier = Modifier,
             onIdChange = { },
-            onPasswordChange = { }
+            onPasswordChange = { },
+            signUpState = SignUpState()
         )
     }
 }

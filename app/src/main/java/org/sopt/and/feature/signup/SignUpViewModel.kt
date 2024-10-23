@@ -20,11 +20,11 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
     private val _signUpSideEffect = MutableSharedFlow<SignUpSideEffect>()
     val signUpSideEffect get() = _signUpSideEffect.asSharedFlow()
 
-    fun onSignUpClick(email: String, password: String) {
+    fun onSignUpClick() {
         viewModelScope.launch {
-            if (!isEmailValid(email)) {
+            if (!isEmailValid(_signUpState.value.email)) {
                 _signUpSideEffect.emit(SignUpSideEffect.Toast(R.string.sign_up_not_valid_email))
-            } else if (!isPasswordValid(password)) {
+            } else if (!isPasswordValid(_signUpState.value.password)) {
                 _signUpSideEffect.emit(SignUpSideEffect.Toast(R.string.sign_up_not_valid_password))
             } else {
                 _signUpSideEffect.emit(SignUpSideEffect.NavigateToSignIn)
