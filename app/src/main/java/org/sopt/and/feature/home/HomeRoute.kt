@@ -130,14 +130,17 @@ fun HomeScreen(
             }
         }
         item {
-            Column {
+            Column(
+                modifier = Modifier
+                    .padding(top = 30.dp),
+            ) {
                 Text(
                     text = stringResource(R.string.home_today_top_20),
                     fontSize = 18.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
-                        .padding(top = 10.dp, bottom = 5.dp, start = 15.dp)
+                        .padding(bottom = 5.dp, start = 15.dp)
                 )
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),

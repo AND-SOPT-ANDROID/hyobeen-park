@@ -21,4 +21,16 @@ fun getHomeContent(): List<HomeContent> = listOf(
             "https://image.wavve.com/v1/thumbnails/240_360_20_80/meta/image/202409/1727416060204368451.webp",
         )
     ),
+    HomeContent(
+        title = R.string.home_trending_now,
+        contentList = listOf(
+            "https://image.wavve.com/v1/thumbnails/240_360_20_80/meta/image/202307/1688707856348829500.webp",
+            "https://image.wavve.com/v1/thumbnails/240_360_20_80/meta/image/202409/1726129999639023816.webp",
+            "https://image.wavve.com/v1/thumbnails/240_360_20_80/meta/image/202309/1694678603909348772.webp",
+            "https://image.wavve.com/v1/thumbnails/240_360_20_80/meta/image/202409/1727255007631341114.webp",
+            "https://image.wavve.com/v1/thumbnails/240_360_20_80/meta/image/202309/1694062320658347760.webp",
+            "https://image.wavve.com/v1/thumbnails/240_360_20_80/meta/image/202305/1683859424490303614.webp",
+            "https://image.wavve.com/v1/thumbnails/240_360_20_80/meta/image/202409/1726468505828994516.webp",
+        )
+    ),
 )
