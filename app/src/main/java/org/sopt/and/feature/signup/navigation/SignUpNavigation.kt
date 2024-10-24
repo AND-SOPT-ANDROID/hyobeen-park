@@ -1,7 +1,5 @@
 package org.sopt.and.feature.signup.navigation
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -21,20 +19,7 @@ fun NavController.navigateToSignUp(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.signUpNavGraph(
     navHostController: NavHostController,
 ) {
-    composable<SignUp>(
-        exitTransition = {
-            ExitTransition.None
-        },
-        popEnterTransition = {
-            EnterTransition.None
-        },
-        enterTransition = {
-            EnterTransition.None
-        },
-        popExitTransition = {
-            ExitTransition.None
-        }
-    ) {
+    composable<SignUp> {
         SignUpRoute(
             navController = navHostController,
         )

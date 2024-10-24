@@ -44,6 +44,8 @@ import org.sopt.and.feature.signup.navigation.navigateToSignUp
 
 @Composable
 fun SignInRoute(
+    email: String,
+    password: String,
     viewModel: SignInViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
     navController: NavHostController,
