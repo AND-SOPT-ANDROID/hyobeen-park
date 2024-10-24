@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -29,18 +30,21 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
+import androidx.navigation.NavHostController
 import org.sopt.and.R
 import org.sopt.and.core.designsystem.component.SocialLoginButton
 import org.sopt.and.core.designsystem.component.textfield.EmailTextField
 import org.sopt.and.core.designsystem.component.textfield.PasswordTextField
+import org.sopt.and.core.designsystem.component.topappbar.CloseButtonTopAppBar
 import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
 import org.sopt.and.core.extension.toast
+import org.sopt.and.feature.signin.navigation.navigateToSignIn
 
 @Composable
 fun SignUpRoute(
-    navigateToSignIn: (String, String) -> Unit,
     viewModel: SignUpViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
+    navController: NavHostController,
 ) {
     val signUpState by viewModel.signUpState.collectAsStateWithLifecycle()
 
@@ -54,7 +58,7 @@ fun SignUpRoute(
                     is SignUpSideEffect.Toast -> context.toast(sideEffect.message)
                     is SignUpSideEffect.NavigateToSignIn -> {
                         context.toast(R.string.sign_up_success)
-                        navigateToSignIn(signUpState.email, signUpState.password)
+                        navController.navigateToSignIn()
                     }
                 }
             }
@@ -64,6 +68,7 @@ fun SignUpRoute(
         onSignUpButtonClick = viewModel::onSignUpClick,
         onIdChange = viewModel::updateEmail,
         onPasswordChange = viewModel::updatePassword,
+        onCloseButtonClick = { navController.popBackStack() },
         modifier = modifier,
         signUpState = signUpState,
     )
@@ -75,14 +80,20 @@ fun SignUpScreen(
     onSignUpButtonClick: () -> Unit,
     onIdChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
+    onCloseButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
     signUpState: SignUpState,
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black),
+            .background(Color.Black)
+            .navigationBarsPadding(),
     ) {
+        CloseButtonTopAppBar(
+            title = stringResource(R.string.sign_up_main_title),
+            onCloseClick = onCloseButtonClick,
+        )
         SignUpTitle(
             modifier = Modifier
                 .padding(
@@ -251,6 +262,7 @@ fun SignInPreview() {
             modifier = Modifier,
             onIdChange = { },
             onPasswordChange = { },
+            onCloseButtonClick = { },
             signUpState = SignUpState()
         )
     }

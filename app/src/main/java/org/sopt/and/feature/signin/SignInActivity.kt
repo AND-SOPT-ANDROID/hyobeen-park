@@ -39,54 +39,54 @@ class SignInActivity : ComponentActivity() {
             }
 
         }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            val coroutine = rememberCoroutineScope()
-            val snackbarHostState = remember {
-                SnackbarHostState()
-            }
-            ANDANDROIDTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    topBar = {
-                        BackButtonTopAppBar(
-                            onBackClick = {},
-                        )
-                    },
-                    snackbarHost = {
-                        SnackbarHost(hostState = snackbarHostState)
-                    }
-                ) { innerPadding ->
-                    SignInRoute(
-                        navigateToSignUp = {
-                            Intent(this, SignUpActivity::class.java).apply {
-                                resultLauncher.launch(this)
-                            }
-                        },
-                        navigateToMyPage = { email, password ->
-                            if (isSignInAvailable(email, password)) {
-                                Intent(this, MyPageActivity::class.java).apply {
-                                    putExtra(ID_KEY, email)
-                                    startActivity(this)
-                                    finish()
-                                }
-                            } else {
-                                coroutine.launch {
-                                    snackbarHostState.showSnackbar(
-                                        message = this@SignInActivity.getString(R.string.sign_in_failed),
-                                    )
-                                }
-                            }
-                        },
-                        modifier = Modifier
-                            .padding(innerPadding),
-                    )
-                }
-            }
-        }
-    }
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContent {
+//            val coroutine = rememberCoroutineScope()
+//            val snackbarHostState = remember {
+//                SnackbarHostState()
+//            }
+//            ANDANDROIDTheme {
+//                Scaffold(
+//                    modifier = Modifier.fillMaxSize(),
+//                    topBar = {
+//                        BackButtonTopAppBar(
+//                            onBackClick = {},
+//                        )
+//                    },
+//                    snackbarHost = {
+//                        SnackbarHost(hostState = snackbarHostState)
+//                    }
+//                ) { innerPadding ->
+//                    SignInRoute(
+//                        navigateToSignUp = {
+//                            Intent(this, SignUpActivity::class.java).apply {
+//                                resultLauncher.launch(this)
+//                            }
+//                        },
+//                        navigateToMyPage = { email, password ->
+//                            if (isSignInAvailable(email, password)) {
+//                                Intent(this, MyPageActivity::class.java).apply {
+//                                    putExtra(ID_KEY, email)
+//                                    startActivity(this)
+//                                    finish()
+//                                }
+//                            } else {
+//                                coroutine.launch {
+//                                    snackbarHostState.showSnackbar(
+//                                        message = this@SignInActivity.getString(R.string.sign_in_failed),
+//                                    )
+//                                }
+//                            }
+//                        },
+//                        modifier = Modifier
+//                            .padding(innerPadding),
+//                    )
+//                }
+//            }
+//        }
+//    }
 
     private fun isSignInAvailable(email: String, password: String): Boolean {
         val isEmailValid = email.isNotBlank() && email == userId

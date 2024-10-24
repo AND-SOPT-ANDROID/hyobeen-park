@@ -19,33 +19,33 @@ import org.sopt.and.feature.signin.SignInActivity
 
 @AndroidEntryPoint
 class SignUpActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            ANDANDROIDTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    topBar = {
-                        CloseButtonTopAppBar(
-                            title = stringResource(R.string.sign_up_main_title),
-                            onCloseClick = {},
-                        )
-                    }
-                ) { innerPadding ->
-                    SignUpRoute(
-                        navigateToSignIn = { email, password ->
-                            intent.apply {
-                                putExtra(ID_KEY, email)
-                                putExtra(PASSWORD_KEY, password)
-                                setResult(RESULT_OK, this)
-                                finish()
-                            }
-                        },
-                        modifier = Modifier
-                            .padding(paddingValues = innerPadding)
-                    )
-                }
-            }
-        }
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContent {
+//            ANDANDROIDTheme {
+//                Scaffold(
+//                    modifier = Modifier.fillMaxSize(),
+//                    topBar = {
+//                        CloseButtonTopAppBar(
+//                            title = stringResource(R.string.sign_up_main_title),
+//                            onCloseClick = {},
+//                        )
+//                    }
+//                ) { innerPadding ->
+//                    SignUpRoute(
+//                        navigateToSignIn = { email, password ->
+//                            intent.apply {
+//                                putExtra(ID_KEY, email)
+//                                putExtra(PASSWORD_KEY, password)
+//                                setResult(RESULT_OK, this)
+//                                finish()
+//                            }
+//                        },
+//                        modifier = Modifier
+//                            .padding(paddingValues = innerPadding)
+//                    )
+//                }
+//            }
+//        }
+//    }
 }

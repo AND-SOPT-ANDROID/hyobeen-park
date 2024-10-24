@@ -2,7 +2,6 @@ package org.sopt.and.feature.signup.navigation
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -37,7 +36,7 @@ fun NavGraphBuilder.signUpNavGraph(
         }
     ) {
         SignUpRoute(
-            { _, _ -> }
+            navController = navHostController,
         )
     }
 }
