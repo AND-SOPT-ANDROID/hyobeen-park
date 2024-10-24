@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -13,12 +14,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.sopt.and.R
 import org.sopt.and.core.designsystem.component.topappbar.BackButtonTopAppBar
 import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
-import org.sopt.and.feature.mypage.MyPageActivity
+import org.sopt.and.feature.my.MyPageActivity
 import org.sopt.and.feature.signup.SignUpActivity
 
 const val ID_KEY = "id"
@@ -79,7 +81,7 @@ class SignInActivity : ComponentActivity() {
                             }
                         },
                         modifier = Modifier
-                            .padding(innerPadding)
+                            .padding(innerPadding),
                     )
                 }
             }

@@ -1,4 +1,4 @@
-package org.sopt.and.feature.mypage
+package org.sopt.and.feature.my
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.sp
 import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.and.R
 import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
-import org.sopt.and.feature.mypage.component.MyPageContent
-import org.sopt.and.feature.mypage.component.MyPageTextButton
+import org.sopt.and.feature.my.component.MyPageContent
+import org.sopt.and.feature.my.component.MyPageTextButton
 import org.sopt.and.feature.signin.ID_KEY
 
 @AndroidEntryPoint
