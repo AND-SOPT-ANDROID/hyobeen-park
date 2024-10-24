@@ -37,7 +37,7 @@ fun Top20ImageItem(
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .padding(bottom = 30.dp)
-                .size(height = 240.dp, width = 200.dp)
+                .size(height = 260.dp, width = 180.dp)
                 .clip(RoundedCornerShape(10.dp))
         )
         Text(

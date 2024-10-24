@@ -61,7 +61,7 @@ fun HomeImageSlider(
 
     HorizontalPager(
         state = pagerState,
-        contentPadding = PaddingValues(screenWidth * 0.1f / 2),
+        contentPadding = PaddingValues(horizontal = screenWidth * 0.1f / 2),
         beyondViewportPageCount = 1,
         modifier = modifier
     ) { page ->

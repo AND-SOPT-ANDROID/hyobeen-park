@@ -30,7 +30,7 @@ fun HomeTitleButton(
             ) {
                 Text(
                     text = title,
-                    fontSize = 20.sp,
+                    fontSize = 18.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
