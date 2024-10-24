@@ -24,12 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".feature.signup.SignUpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".feature.my.MyPageActivity"
-            android:exported="false" />
     </application>
 
 </manifest>
