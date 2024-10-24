@@ -31,7 +31,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
-import androidx.navigation.NavHostController
 import org.sopt.and.R
 import org.sopt.and.core.designsystem.component.SocialLoginButton
 import org.sopt.and.core.designsystem.component.textfield.EmailTextField
@@ -39,16 +38,13 @@ import org.sopt.and.core.designsystem.component.textfield.PasswordTextField
 import org.sopt.and.core.designsystem.component.topappbar.BackButtonTopAppBar
 import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
 import org.sopt.and.core.extension.toast
-import org.sopt.and.feature.my.navigation.navigateToMy
-import org.sopt.and.feature.signup.navigation.navigateToSignUp
 
 @Composable
 fun SignInRoute(
-    email: String,
-    password: String,
+    navigateToSignUp: () -> Unit,
+    navigateToHome: () -> Unit,
     viewModel: SignInViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
-    navController: NavHostController,
 ) {
     val signInState by viewModel.signInState.collectAsStateWithLifecycle()
 
@@ -64,9 +60,12 @@ fun SignInRoute(
                     }
 
                     is SignInSideEffect.ShowSnackBar -> {}
-                    is SignInSideEffect.NavigateToSignUp -> navController.navigateToSignUp()
-                    is SignInSideEffect.NavigateToMyPage -> {
-                        navController.navigateToMy()
+                    is SignInSideEffect.NavigateToSignUp -> {
+                        navigateToSignUp()
+                    }
+
+                    is SignInSideEffect.NavigateToHome -> {
+                        navigateToHome()
                     }
                 }
             }

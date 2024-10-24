@@ -30,7 +30,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
-import androidx.navigation.NavHostController
 import org.sopt.and.R
 import org.sopt.and.core.designsystem.component.SocialLoginButton
 import org.sopt.and.core.designsystem.component.textfield.EmailTextField
@@ -38,13 +37,13 @@ import org.sopt.and.core.designsystem.component.textfield.PasswordTextField
 import org.sopt.and.core.designsystem.component.topappbar.CloseButtonTopAppBar
 import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
 import org.sopt.and.core.extension.toast
-import org.sopt.and.feature.signin.navigation.navigateToSignIn
 
 @Composable
 fun SignUpRoute(
     viewModel: SignUpViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
-    navController: NavHostController,
+    navigateToSignIn: (String, String) -> Unit,
+    popStackBack: () -> Unit,
 ) {
     val signUpState by viewModel.signUpState.collectAsStateWithLifecycle()
 
@@ -58,10 +57,7 @@ fun SignUpRoute(
                     is SignUpSideEffect.Toast -> context.toast(sideEffect.message)
                     is SignUpSideEffect.NavigateToSignIn -> {
                         context.toast(R.string.sign_up_success)
-                        navController.navigateToSignIn(
-                            email = signUpState.email,
-                            password = signUpState.password,
-                        )
+                        navigateToSignIn(signUpState.email, signUpState.password)
                     }
                 }
             }
@@ -71,7 +67,7 @@ fun SignUpRoute(
         onSignUpButtonClick = viewModel::onSignUpClick,
         onIdChange = viewModel::updateEmail,
         onPasswordChange = viewModel::updatePassword,
-        onCloseButtonClick = { navController.popBackStack() },
+        onCloseButtonClick = popStackBack,
         modifier = modifier,
         signUpState = signUpState,
     )

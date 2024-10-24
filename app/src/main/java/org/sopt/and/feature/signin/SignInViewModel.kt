@@ -32,7 +32,7 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             with(_signInState.value) {
                 if (isSignInAvailable(email, password)) {
-                    _signInSideEffect.emit(SignInSideEffect.NavigateToMyPage)
+                    _signInSideEffect.emit(SignInSideEffect.NavigateToHome)
                 } else {
                     _signInSideEffect.emit(
                         SignInSideEffect.ShowToast(

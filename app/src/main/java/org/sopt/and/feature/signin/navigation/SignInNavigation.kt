@@ -5,15 +5,17 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
+import androidx.navigation.navOptions
 import kotlinx.serialization.Serializable
 import org.sopt.and.core.navigation.MainTabRoute
+import org.sopt.and.feature.home.navigation.navigateToHome
 import org.sopt.and.feature.signin.SignInRoute
+import org.sopt.and.feature.signup.navigation.navigateToSignUp
 
 fun NavController.navigateToSignIn(
     email: String = "",
     password: String = "",
-    navOptions: NavOptions? = null
+    navOptions: NavOptions? = null,
 ) {
     navigate(
         route = SignIn(
@@ -27,12 +29,15 @@ fun NavController.navigateToSignIn(
 fun NavGraphBuilder.signInNavGraph(
     navHostController: NavHostController,
 ) {
-    composable<SignIn> { backStackEntry ->
-        val item = backStackEntry.toRoute<SignIn>()
+    composable<SignIn> {
+        val navOptions = navOptions {
+            popUpTo(navHostController.graph.id) {
+                inclusive = true
+            }
+        }
         SignInRoute(
-            email = item.email,
-            password = item.password,
-            navController = navHostController,
+            navigateToSignUp = { navHostController.navigateToSignUp() },
+            navigateToHome = { navHostController.navigateToHome(navOptions = navOptions) }
         )
     }
 }
