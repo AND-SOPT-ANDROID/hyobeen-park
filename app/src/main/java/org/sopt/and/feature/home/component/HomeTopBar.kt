@@ -23,7 +23,7 @@ fun HomeTopBar() {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 10.dp, horizontal = 20.dp),
+            .padding(vertical = 15.dp, horizontal = 15.dp),
     ) {
         Image(
             painter = painterResource(R.drawable.img_main_logo),
