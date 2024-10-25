@@ -16,8 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,16 +43,12 @@ fun HomeImageSlider(
         pageCount = { Int.MAX_VALUE },
     )
 
-    val autoScroll = remember { mutableStateOf(true) }
-
     LaunchedEffect(true) {
-        if (autoScroll.value) {
-            while (true) {
-                delay(4000)
-                if (!pagerState.isScrollInProgress) {
-                    val nextPage = pagerState.currentPage.plus(1)
-                    pagerState.animateScrollToPage(nextPage)
-                }
+        while (true) {
+            delay(4000)
+            if (!pagerState.isScrollInProgress) {
+                val nextPage = pagerState.currentPage.plus(1)
+                pagerState.animateScrollToPage(nextPage)
             }
         }
     }
