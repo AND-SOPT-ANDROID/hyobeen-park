@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -22,25 +23,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import org.sopt.and.R
 import org.sopt.and.core.designsystem.component.SocialLoginButton
 import org.sopt.and.core.designsystem.component.textfield.EmailTextField
 import org.sopt.and.core.designsystem.component.textfield.PasswordTextField
+import org.sopt.and.core.designsystem.component.topappbar.BackButtonTopAppBar
 import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
 import org.sopt.and.core.extension.toast
 
 @Composable
 fun SignInRoute(
     navigateToSignUp: () -> Unit,
-    navigateToMyPage: (String, String) -> Unit,
+    navigateToHome: () -> Unit,
     viewModel: SignInViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
 ) {
@@ -58,9 +60,12 @@ fun SignInRoute(
                     }
 
                     is SignInSideEffect.ShowSnackBar -> {}
-                    is SignInSideEffect.NavigateToSignUp -> navigateToSignUp()
-                    is SignInSideEffect.NavigateToMyPage -> {
-                        navigateToMyPage(signInState.email, signInState.password)
+                    is SignInSideEffect.NavigateToSignUp -> {
+                        navigateToSignUp()
+                    }
+
+                    is SignInSideEffect.NavigateToHome -> {
+                        navigateToHome()
                     }
                 }
             }
@@ -88,8 +93,12 @@ fun SignInScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black),
+            .background(Color.Black)
+            .navigationBarsPadding(),
     ) {
+        BackButtonTopAppBar(
+            onBackClick = {},
+        )
         EmailTextField(
             email = signInState.email,
             hint = stringResource(R.string.sign_in_email),

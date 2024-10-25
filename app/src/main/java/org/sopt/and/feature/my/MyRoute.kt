@@ -1,11 +1,9 @@
-package org.sopt.and.feature.mypage
+package org.sopt.and.feature.my
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,37 +22,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dagger.hilt.android.AndroidEntryPoint
+import androidx.navigation.NavHostController
 import org.sopt.and.R
 import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
-import org.sopt.and.feature.mypage.component.MyPageContent
-import org.sopt.and.feature.mypage.component.MyPageTextButton
-import org.sopt.and.feature.signin.ID_KEY
+import org.sopt.and.feature.my.component.MyPageContent
+import org.sopt.and.feature.my.component.MyPageTextButton
 
-@AndroidEntryPoint
-class MyPageActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        val email = intent.getStringExtra(ID_KEY) ?: ""
-
-        super.onCreate(savedInstanceState)
-        setContent {
-            ANDANDROIDTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                ) { innerPadding ->
-                    MyPageScreen(
-                        email = email,
-                        modifier = Modifier
-                            .padding(innerPadding)
-                    )
-                }
-            }
-        }
-    }
+@Composable
+fun MyRoute(
+    paddingValues: PaddingValues,
+    navController: NavHostController,
+) {
+    MyScreen(
+        email = "",
+    )
 }
 
 @Composable
-fun MyPageScreen(
+fun MyScreen(
     email: String,
     modifier: Modifier = Modifier,
 ) {
@@ -138,10 +122,10 @@ fun MyPageScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun MyPagePreview(
-
-) {
+fun PreviewMyScreen() {
     ANDANDROIDTheme {
-        MyPageScreen("")
+        MyScreen(
+            email = "",
+        )
     }
 }
