@@ -7,7 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
 import kotlinx.serialization.Serializable
-import org.sopt.and.core.navigation.MainTabRoute
+import org.sopt.and.core.navigation.Route
 import org.sopt.and.feature.home.navigation.navigateToHome
 import org.sopt.and.feature.signin.SignInRoute
 import org.sopt.and.feature.signup.navigation.navigateToSignUp
@@ -46,4 +46,4 @@ fun NavGraphBuilder.signInNavGraph(
 data class SignIn(
     val email: String,
     val password: String,
-) : MainTabRoute
+) : Route

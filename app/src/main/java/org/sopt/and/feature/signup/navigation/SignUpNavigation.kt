@@ -7,7 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
 import kotlinx.serialization.Serializable
-import org.sopt.and.core.navigation.MainTabRoute
+import org.sopt.and.core.navigation.Route
 import org.sopt.and.feature.signin.navigation.navigateToSignIn
 import org.sopt.and.feature.signup.SignUpRoute
 
@@ -42,4 +42,4 @@ fun NavGraphBuilder.signUpNavGraph(
 }
 
 @Serializable
-data object SignUp : MainTabRoute
+data object SignUp : Route
