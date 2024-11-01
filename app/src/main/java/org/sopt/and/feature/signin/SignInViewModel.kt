@@ -1,5 +1,6 @@
 package org.sopt.and.feature.signin
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,6 +22,8 @@ class SignInViewModel @Inject constructor(
 ) : ViewModel() {
     private val _signInState: MutableStateFlow<SignInState> = MutableStateFlow(SignInState())
     val signInState get() = _signInState.asStateFlow()
+
+    private val _test = mutableStateOf(SignInState())
 
     private val _signInSideEffect = MutableSharedFlow<SignInSideEffect>()
     val signInSideEffect get() = _signInSideEffect.asSharedFlow()
