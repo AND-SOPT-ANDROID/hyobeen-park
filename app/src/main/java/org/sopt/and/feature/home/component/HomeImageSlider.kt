@@ -20,15 +20,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
-import coil3.request.ImageRequest
-import coil3.request.crossfade
 import kotlinx.coroutines.delay
+import org.sopt.and.core.designsystem.component.image.WavveAsyncImage
 import org.sopt.and.feature.home.model.HomeSliderImage
 
 @Composable
@@ -72,16 +68,11 @@ fun HomeImageSlider(
                     shape = RoundedCornerShape(15.dp)
                 )
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(images[currentPage].image)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = "",
-                contentScale = ContentScale.Crop,
+            WavveAsyncImage(
+                imageUrl = images[currentPage].image,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(480.dp)
+                    .height(480.dp),
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,

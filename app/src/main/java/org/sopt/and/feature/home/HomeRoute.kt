@@ -10,16 +10,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -27,10 +23,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import coil3.compose.AsyncImage
-import coil3.request.ImageRequest
-import coil3.request.crossfade
 import org.sopt.and.R
+import org.sopt.and.core.designsystem.component.image.WavveAsyncImage
 import org.sopt.and.feature.home.component.HomeImageSlider
 import org.sopt.and.feature.home.component.HomeTitleButton
 import org.sopt.and.feature.home.component.HomeTopBar
@@ -113,16 +107,11 @@ fun HomeScreen(
                         count = contentList.size,
                         key = { item -> contentList[item] }
                     ) { image ->
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data(contentList[image])
-                                .crossfade(true)
-                                .build(),
-                            contentDescription = "",
-                            contentScale = ContentScale.Crop,
+                        WavveAsyncImage(
+                            imageUrl = contentList[image],
+                            cornerRadius = 5.dp,
                             modifier = Modifier
                                 .size(width = 120.dp, height = 180.dp)
-                                .clip(RoundedCornerShape(5.dp))
                         )
                     }
                 }
