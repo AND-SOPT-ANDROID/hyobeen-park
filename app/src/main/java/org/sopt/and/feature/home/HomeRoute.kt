@@ -35,7 +35,6 @@ import org.sopt.and.feature.home.component.HomeImageSlider
 import org.sopt.and.feature.home.component.HomeTitleButton
 import org.sopt.and.feature.home.component.HomeTopBar
 import org.sopt.and.feature.home.component.Top20ImageItem
-import org.sopt.and.feature.home.model.homeCategory
 
 @Composable
 fun HomeRoute(
