@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
@@ -93,7 +94,7 @@ fun HomeImageSlider(
                         .padding(start = 5.dp),
                 )
                 VerticalDivider(
-                    thickness = 1.dp,
+                    thickness = Dp.Hairline.plus(1.dp),
                     color = Color.DarkGray,
                     modifier = Modifier
                         .height(10.dp)
