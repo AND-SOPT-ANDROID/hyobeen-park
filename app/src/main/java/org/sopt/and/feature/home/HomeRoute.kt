@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import org.sopt.and.R
 import org.sopt.and.core.designsystem.component.image.WavveAsyncImage
 import org.sopt.and.feature.home.component.HomeImageSlider
@@ -33,7 +32,6 @@ import org.sopt.and.feature.home.component.Top20ImageItem
 @Composable
 fun HomeRoute(
     paddingValues: PaddingValues,
-    navController: NavHostController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val homeState by viewModel.homeState.collectAsStateWithLifecycle()

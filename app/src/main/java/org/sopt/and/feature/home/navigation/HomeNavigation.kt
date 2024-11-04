@@ -39,7 +39,6 @@ fun NavGraphBuilder.homeNavGraph(
     ) {
         HomeRoute(
             paddingValues = paddingValues,
-            navController = navHostController
         )
     }
 }
