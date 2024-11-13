@@ -16,6 +16,7 @@ import coil3.request.crossfade
 fun WavveAsyncImage(
     imageUrl: String,
     cornerRadius: Dp = 0.dp,
+    contentDescription: String = "",
     modifier: Modifier = Modifier,
 ) {
     AsyncImage(
@@ -23,7 +24,7 @@ fun WavveAsyncImage(
             .data(imageUrl)
             .crossfade(true)
             .build(),
-        contentDescription = "",
+        contentDescription = contentDescription,
         contentScale = ContentScale.Crop,
         modifier = modifier
             .clip(RoundedCornerShape(cornerRadius))
