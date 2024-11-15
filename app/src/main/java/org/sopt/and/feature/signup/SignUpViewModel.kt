@@ -22,8 +22,8 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
 
     fun onSignUpClick() {
         viewModelScope.launch {
-            if (!isEmailValid(_signUpState.value.email)) {
-                _signUpSideEffect.emit(SignUpSideEffect.Toast(R.string.sign_up_not_valid_email))
+            if (!isInputValid(_signUpState.value.email) || !isInputValid(_signUpState.value.hobby)) {
+                _signUpSideEffect.emit(SignUpSideEffect.Toast(R.string.textfield_input_length))
             } else if (!isPasswordValid(_signUpState.value.password)) {
                 _signUpSideEffect.emit(SignUpSideEffect.Toast(R.string.sign_up_not_valid_password))
             } else {
@@ -32,11 +32,14 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    private fun isInputValid(text: String): Boolean =
+        text.length <= MAX_LENGTH
+
     private fun isEmailValid(email: String): Boolean =
         email.matches(EMAIL_REGEX.toRegex())
 
     private fun isPasswordValid(password: String): Boolean {
-        if (password.length in PASSWORD_LENGTH_MIN..PASSWORD_LENGTH_MAX) {
+        if (password.length <= MAX_LENGTH) {
             var count = 0
             if (password.contains(UPPER_CASE_REGEX.toRegex())) count++
             if (password.contains(LOWER_CASE_REGEX.toRegex())) count++
@@ -64,7 +67,16 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    fun updateHobby(hobby: String) {
+        _signUpState.update {
+            it.copy(
+                hobby = hobby
+            )
+        }
+    }
+
     companion object {
+        private const val MAX_LENGTH = 8
         private const val PASSWORD_LENGTH_MIN = 8
         private const val PASSWORD_LENGTH_MAX = 20
         private const val PASSWORD_TYPE = 3
