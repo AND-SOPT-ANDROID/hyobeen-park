@@ -10,10 +10,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.sopt.and.R
+import org.sopt.and.domain.repository.AuthRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor() : ViewModel() {
+class SignUpViewModel @Inject constructor(
+    private val authRepository: AuthRepository,
+) : ViewModel() {
     private val _signUpState: MutableStateFlow<SignUpState> = MutableStateFlow(SignUpState())
     val signUpState get() = _signUpState.asStateFlow()
 
@@ -27,7 +30,41 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
             } else if (!isPasswordValid(_signUpState.value.password)) {
                 _signUpSideEffect.emit(SignUpSideEffect.Toast(R.string.sign_up_not_valid_password))
             } else {
-                _signUpSideEffect.emit(SignUpSideEffect.NavigateToSignIn)
+                signUp(
+                    username = _signUpState.value.email,
+                    password = _signUpState.value.password,
+                    hobby = _signUpState.value.hobby
+                )
+            }
+        }
+    }
+
+    private fun signUp(
+        username: String,
+        password: String,
+        hobby: String,
+    ) {
+        viewModelScope.launch {
+            authRepository.postSignUp(
+                username = username,
+                password = password,
+                hobby = hobby,
+            ).onSuccess { response ->
+                _signUpSideEffect.emit(
+                    SignUpSideEffect.Toast(
+                        when {
+                            response.no != null -> R.string.sign_up_success
+                            response.code == "00" -> R.string.sign_up_user_exist
+                            response.code == "01" -> R.string.textfield_input_length
+                            else -> R.string.sign_up_failed
+                        }
+                    )
+                )
+                if (response.no != null) {
+                    _signUpSideEffect.emit(SignUpSideEffect.NavigateToSignIn)
+                }
+            }.onFailure {
+                _signUpSideEffect.emit(SignUpSideEffect.Toast(R.string.sign_up_failed))
             }
         }
     }

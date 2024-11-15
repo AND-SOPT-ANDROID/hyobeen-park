@@ -1,0 +1,9 @@
+package org.sopt.and.data.mapper
+
+import org.sopt.and.data.dto.response.SignUpResponse
+import org.sopt.and.domain.entitiy.signup.SignUpResponseModel
+
+fun SignUpResponse.toSignUpResponseModel(): SignUpResponseModel = SignUpResponseModel(
+    no = this.no,
+    code = this.code
+)
