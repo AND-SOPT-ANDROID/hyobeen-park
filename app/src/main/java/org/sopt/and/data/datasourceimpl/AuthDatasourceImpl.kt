@@ -4,7 +4,7 @@ import org.sopt.and.data.datasource.AuthDatasource
 import org.sopt.and.data.dto.BaseResponse
 import org.sopt.and.data.dto.request.SignInRequest
 import org.sopt.and.data.dto.request.SignUpRequest
-import org.sopt.and.data.dto.response.SignInRes.SignInResponse
+import org.sopt.and.data.dto.response.SignInResponse
 import org.sopt.and.data.dto.response.SignUpResponse
 import org.sopt.and.data.service.AuthService
 import javax.inject.Inject

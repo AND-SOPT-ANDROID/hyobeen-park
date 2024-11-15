@@ -3,7 +3,7 @@ package org.sopt.and.data.service
 import org.sopt.and.data.dto.BaseResponse
 import org.sopt.and.data.dto.request.SignInRequest
 import org.sopt.and.data.dto.request.SignUpRequest
-import org.sopt.and.data.dto.response.SignInRes.SignInResponse
+import org.sopt.and.data.dto.response.SignInResponse
 import org.sopt.and.data.dto.response.SignUpResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
