@@ -1,5 +1,7 @@
 package org.sopt.and.feature.signin
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +25,8 @@ class SignInViewModel @Inject constructor(
     private val _signInSideEffect = MutableSharedFlow<SignInSideEffect>()
     val signInSideEffect get() = _signInSideEffect.asSharedFlow()
 
+    private var sharedPreferences : SharedPreferences? = null
+
     fun onSignUpButtonClick() {
         viewModelScope.launch {
             _signInSideEffect.emit(SignInSideEffect.NavigateToSignUp)
@@ -33,12 +37,20 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             authRepository.postSignIn(_signInState.value.email, _signInState.value.password)
                 .onSuccess { response ->
-                    updateToken(response.token)
+                    saveToken(response.token)
                     _signInSideEffect.emit(SignInSideEffect.NavigateToHome)
                 }.onFailure {
                     _signInSideEffect.emit(SignInSideEffect.ShowToast(R.string.sign_in_failed))
                 }
         }
+    }
+
+    fun initializePreferences(context: Context) {
+        sharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+    }
+
+    private fun saveToken(token: String) {
+        sharedPreferences?.edit()?.putString("token", token)?.apply()
     }
 
     fun updateEmail(email: String) {

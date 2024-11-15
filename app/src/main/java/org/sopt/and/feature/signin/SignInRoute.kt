@@ -51,6 +51,8 @@ fun SignInRoute(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
+    viewModel.initializePreferences(context)
+
     LaunchedEffect(viewModel.signInSideEffect, lifecycleOwner) {
         viewModel.signInSideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
             .collect { sideEffect ->
