@@ -73,7 +73,7 @@ fun SignInRoute(
 
     SignInScreen(
         onSignUpButtonClick = viewModel::onSignUpButtonClick,
-        onSignInButtonClick = viewModel::onLoginButtonClick,
+        onSignInButtonClick = viewModel::signIn,
         onIdChange = viewModel::updateEmail,
         onPasswordChange = viewModel::updatePassword,
         signInState = signInState,

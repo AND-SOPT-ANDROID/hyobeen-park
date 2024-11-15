@@ -2,7 +2,9 @@ package org.sopt.and.data.datasourceimpl
 
 import org.sopt.and.data.datasource.AuthDatasource
 import org.sopt.and.data.dto.BaseResponse
+import org.sopt.and.data.dto.request.SignInRequest
 import org.sopt.and.data.dto.request.SignUpRequest
+import org.sopt.and.data.dto.response.SignInRes.SignInResponse
 import org.sopt.and.data.dto.response.SignUpResponse
 import org.sopt.and.data.service.AuthService
 import javax.inject.Inject
@@ -13,4 +15,8 @@ class AuthDatasourceImpl @Inject constructor(
     override suspend fun postSignUp(
         request: SignUpRequest
     ): BaseResponse<SignUpResponse> = authService.postSignUp(request)
+
+    override suspend fun postSignIn(
+        request: SignInRequest
+    ): BaseResponse<SignInResponse> = authService.postSignIn(request)
 }

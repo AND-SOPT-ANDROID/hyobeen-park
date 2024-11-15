@@ -42,7 +42,7 @@ import org.sopt.and.core.extension.toast
 fun SignUpRoute(
     viewModel: SignUpViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
-    navigateToSignIn: (String, String) -> Unit,
+    navigateToSignIn: () -> Unit,
     popStackBack: () -> Unit,
 ) {
     val signUpState by viewModel.signUpState.collectAsStateWithLifecycle()
@@ -57,7 +57,7 @@ fun SignUpRoute(
                     is SignUpSideEffect.Toast -> context.toast(sideEffect.message)
                     is SignUpSideEffect.NavigateToSignIn -> {
                         context.toast(R.string.sign_up_success)
-                        navigateToSignIn(signUpState.email, signUpState.password)
+                        navigateToSignIn()
                     }
                 }
             }

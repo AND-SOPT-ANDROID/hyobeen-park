@@ -1,4 +1,4 @@
-package org.sopt.and.domain.entitiy.signup
+package org.sopt.and.domain.entitiy.auth
 
 data class SignUpRequestModel(
     val username: String,

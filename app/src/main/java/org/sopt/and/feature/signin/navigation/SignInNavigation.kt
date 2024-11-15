@@ -13,15 +13,10 @@ import org.sopt.and.feature.signin.SignInRoute
 import org.sopt.and.feature.signup.navigation.navigateToSignUp
 
 fun NavController.navigateToSignIn(
-    email: String = "",
-    password: String = "",
     navOptions: NavOptions? = null,
 ) {
     navigate(
-        route = SignIn(
-            email = email,
-            password = password,
-        ),
+        route = SignIn,
         navOptions = navOptions
     )
 }
@@ -43,7 +38,4 @@ fun NavGraphBuilder.signInNavGraph(
 }
 
 @Serializable
-data class SignIn(
-    val email: String,
-    val password: String,
-) : Route
+data object SignIn: Route
