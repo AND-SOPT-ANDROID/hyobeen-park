@@ -4,6 +4,6 @@ import org.sopt.and.data.dto.response.SignUpResponse
 import org.sopt.and.domain.entitiy.auth.SignUpResponseModel
 
 fun SignUpResponse.toSignUpResponseModel(): SignUpResponseModel = SignUpResponseModel(
-    no = this.no,
-    code = this.code
+    userNumber = this.userNumber,
+    code = this.code,
 )

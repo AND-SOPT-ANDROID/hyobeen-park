@@ -53,14 +53,14 @@ class SignUpViewModel @Inject constructor(
                 _signUpSideEffect.emit(
                     SignUpSideEffect.Toast(
                         when {
-                            response.no != null -> R.string.sign_up_success
+                            response.userNumber != null -> R.string.sign_up_success
                             response.code == "00" -> R.string.sign_up_user_exist
                             response.code == "01" -> R.string.textfield_input_length
                             else -> R.string.sign_up_failed
                         }
                     )
                 )
-                if (response.no != null) {
+                if (response.userNumber != null) {
                     _signUpSideEffect.emit(SignUpSideEffect.NavigateToSignIn)
                 }
             }.onFailure {

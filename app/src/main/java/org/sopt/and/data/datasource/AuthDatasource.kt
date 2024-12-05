@@ -8,10 +8,10 @@ import org.sopt.and.data.dto.response.SignUpResponse
 
 interface AuthDatasource {
     suspend fun postSignUp(
-        request: SignUpRequest,
+        signUpRequest: SignUpRequest,
     ): BaseResponse<SignUpResponse>
 
     suspend fun postSignIn(
-        request: SignInRequest,
+        signInRequest: SignInRequest,
     ): BaseResponse<SignInResponse>
 }

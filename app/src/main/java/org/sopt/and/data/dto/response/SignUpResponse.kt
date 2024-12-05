@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SignUpResponse(
     @SerialName("no")
-    val no: Int? = null,
+    val userNumber: Int? = null,
     @SerialName("code")
     val code: String? = null,
 )
