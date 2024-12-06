@@ -29,10 +29,8 @@ fun NavGraphBuilder.signUpNavGraph(
         }
 
         SignUpRoute(
-            navigateToSignIn = { email, password ->
+            navigateToSignIn = {
                 navHostController.navigateToSignIn(
-                    email = email,
-                    password = password,
                     navOptions = navOptions,
                 )
             },

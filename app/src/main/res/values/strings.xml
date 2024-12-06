@@ -11,6 +11,8 @@
     <string name="password_textfield_show">show</string>
     <string name="password_textfield_hide">hide</string>
 
+    <string name="textfield_input_length">8자 이하로 입력해주세요</string>
+
     <!-- Sign Up -->
     <string name="sign_up_main_title">회원가입</string>
     <string name="sign_up_title_email_and_password">이메일과 비밀번호</string>
@@ -19,10 +21,11 @@
     <string name="sign_up_title_able">있어요!</string>\
     <string name="sign_up_button">Wavve 회원가입</string>
 
-    <string name="sign_up_email_hint">wavve@example.com</string>
+    <string name="sign_up_email_hint">wavve</string>
     <string name="sign_up_email_description">로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해 주세요.</string>
     <string name="sign_up_password_hint">Wavve 비밀번호 설정</string>
-    <string name="sign_up_password_description">비밀번호는 8~20자 이내로 영문, 대소문자, 숫자, 특수문자 중 3가지 이상 혼용하여 입력해 주세요.</string>
+    <string name="sign_up_password_description">비밀번호는 8자 이내로 영문, 대소문자, 숫자, 특수문자 중 3가지 이상 혼용하여 입력해 주세요.</string>
+    <string name="sign_up_hobby_hint">SOPT</string>
 
     <string name="sign_up_social_description">또는 다른 서비스 계정으로 가입</string>
     <string name="sign_up_information">
@@ -31,8 +34,10 @@
     </string>
 
     <string name="sign_up_not_valid_email">이메일 형식으로 입력해주세요.</string>
-    <string name="sign_up_not_valid_password">비밀번호는 8~20자 이내로 영문 대소문자, 숫자, 특수문자 중 3가지 이상 혼용하여 입력해 주세요.</string>
+    <string name="sign_up_not_valid_password">비밀번호는 8자 이내로 영문 대소문자, 숫자, 특수문자 중 3가지 이상 혼용하여 입력해 주세요.</string>
     <string name="sign_up_success">회원가입을 완료했습니다!</string>
+    <string name="sign_up_failed">회원가입을 실패했습니다</string>
+    <string name="sign_up_user_exist">이미 존재하는 회원입니다</string>
 
     <!-- Sign In -->
     <string name="sign_in">로그인</string>

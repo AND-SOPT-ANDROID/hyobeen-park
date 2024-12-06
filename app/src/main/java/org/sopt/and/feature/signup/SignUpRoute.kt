@@ -42,7 +42,7 @@ import org.sopt.and.core.extension.toast
 fun SignUpRoute(
     viewModel: SignUpViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
-    navigateToSignIn: (String, String) -> Unit,
+    navigateToSignIn: () -> Unit,
     popStackBack: () -> Unit,
 ) {
     val signUpState by viewModel.signUpState.collectAsStateWithLifecycle()
@@ -57,7 +57,7 @@ fun SignUpRoute(
                     is SignUpSideEffect.Toast -> context.toast(sideEffect.message)
                     is SignUpSideEffect.NavigateToSignIn -> {
                         context.toast(R.string.sign_up_success)
-                        navigateToSignIn(signUpState.email, signUpState.password)
+                        navigateToSignIn()
                     }
                 }
             }
@@ -67,6 +67,7 @@ fun SignUpRoute(
         onSignUpButtonClick = viewModel::onSignUpClick,
         onIdChange = viewModel::updateEmail,
         onPasswordChange = viewModel::updatePassword,
+        onHobbyChange = viewModel::updateHobby,
         onCloseButtonClick = popStackBack,
         modifier = modifier,
         signUpState = signUpState,
@@ -79,6 +80,7 @@ fun SignUpScreen(
     onSignUpButtonClick: () -> Unit,
     onIdChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
+    onHobbyChange: (String) -> Unit,
     onCloseButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
     signUpState: SignUpState,
@@ -166,6 +168,15 @@ fun SignUpScreen(
                     .padding(start = 3.dp, end = 10.dp),
             )
         }
+
+        EmailTextField(
+            email = signUpState.hobby,
+            hint = stringResource(R.string.sign_up_hobby_hint),
+            onValueChange = onHobbyChange,
+            modifier = Modifier
+                .padding(top = 30.dp)
+                .padding(horizontal = 20.dp),
+        )
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -261,6 +272,7 @@ fun SignInPreview() {
             modifier = Modifier,
             onIdChange = { },
             onPasswordChange = { },
+            onHobbyChange = { },
             onCloseButtonClick = { },
             signUpState = SignUpState()
         )
