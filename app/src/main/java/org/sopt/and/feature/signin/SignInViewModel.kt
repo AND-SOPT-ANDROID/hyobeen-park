@@ -12,12 +12,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.sopt.and.R
-import org.sopt.and.domain.repository.AuthRepository
+import org.sopt.and.domain.usecase.PostSignInUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
+    private val postSignInUseCase: PostSignInUseCase,
 ) : ViewModel() {
     private val _signInState: MutableStateFlow<SignInState> = MutableStateFlow(SignInState())
     val signInState get() = _signInState.asStateFlow()
@@ -25,7 +25,7 @@ class SignInViewModel @Inject constructor(
     private val _signInSideEffect = MutableSharedFlow<SignInSideEffect>()
     val signInSideEffect get() = _signInSideEffect.asSharedFlow()
 
-    private var sharedPreferences : SharedPreferences? = null
+    private var sharedPreferences: SharedPreferences? = null
 
     fun onSignUpButtonClick() {
         viewModelScope.launch {
@@ -35,13 +35,15 @@ class SignInViewModel @Inject constructor(
 
     fun signIn() {
         viewModelScope.launch {
-            authRepository.postSignIn(_signInState.value.email, _signInState.value.password)
-                .onSuccess { response ->
-                    saveToken(response.token)
-                    _signInSideEffect.emit(SignInSideEffect.NavigateToHome)
-                }.onFailure {
-                    _signInSideEffect.emit(SignInSideEffect.ShowToast(R.string.sign_in_failed))
-                }
+            postSignInUseCase(
+                username = _signInState.value.email,
+                password = _signInState.value.password,
+            ).onSuccess { response ->
+                saveToken(response.token)
+                _signInSideEffect.emit(SignInSideEffect.NavigateToHome)
+            }.onFailure {
+                _signInSideEffect.emit(SignInSideEffect.ShowToast(R.string.sign_in_failed))
+            }
         }
     }
 
