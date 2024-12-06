@@ -55,7 +55,7 @@ fun MyRoute(
     when (homeState.hobby) {
         is UiState.Success -> {
             MyScreen(
-                hobby = (homeState.hobby as UiState.Success<String>).data,
+                hobby = (homeState.hobby as? UiState.Success<String>)?.data ?: "" ,
             )
         }
 
