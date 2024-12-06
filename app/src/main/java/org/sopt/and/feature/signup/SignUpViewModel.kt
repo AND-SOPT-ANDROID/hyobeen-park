@@ -54,8 +54,6 @@ class SignUpViewModel @Inject constructor(
                     SignUpSideEffect.Toast(
                         when {
                             response.userNumber != null -> R.string.sign_up_success
-                            response.code == "00" -> R.string.sign_up_user_exist
-                            response.code == "01" -> R.string.textfield_input_length
                             else -> R.string.sign_up_failed
                         }
                     )
@@ -71,9 +69,6 @@ class SignUpViewModel @Inject constructor(
 
     private fun isInputValid(text: String): Boolean =
         text.length <= MAX_LENGTH
-
-    private fun isEmailValid(email: String): Boolean =
-        email.matches(EMAIL_REGEX.toRegex())
 
     private fun isPasswordValid(password: String): Boolean {
         if (password.length <= MAX_LENGTH) {
@@ -118,7 +113,6 @@ class SignUpViewModel @Inject constructor(
         private const val PASSWORD_LENGTH_MAX = 20
         private const val PASSWORD_TYPE = 3
 
-        const val EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$"
         const val UPPER_CASE_REGEX = "[A-Z]"
         const val LOWER_CASE_REGEX = "[a-z]"
         const val NUMBER_REGEX = "[0-9]"
