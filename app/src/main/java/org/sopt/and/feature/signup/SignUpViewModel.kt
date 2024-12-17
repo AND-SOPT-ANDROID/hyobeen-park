@@ -10,12 +10,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.sopt.and.R
-import org.sopt.and.domain.repository.AuthRepository
+import org.sopt.and.domain.usecase.PostSignUpUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
+    private val postSignUpUseCase: PostSignUpUseCase,
 ) : ViewModel() {
     private val _signUpState: MutableStateFlow<SignUpState> = MutableStateFlow(SignUpState())
     val signUpState get() = _signUpState.asStateFlow()
@@ -30,50 +30,26 @@ class SignUpViewModel @Inject constructor(
             } else if (!isPasswordValid(_signUpState.value.password)) {
                 _signUpSideEffect.emit(SignUpSideEffect.Toast(R.string.sign_up_not_valid_password))
             } else {
-                signUp(
+                postSignUpUseCase(
                     username = _signUpState.value.email,
                     password = _signUpState.value.password,
                     hobby = _signUpState.value.hobby
-                )
-            }
-        }
-    }
-
-    private fun signUp(
-        username: String,
-        password: String,
-        hobby: String,
-    ) {
-        viewModelScope.launch {
-            authRepository.postSignUp(
-                username = username,
-                password = password,
-                hobby = hobby,
-            ).onSuccess { response ->
-                _signUpSideEffect.emit(
-                    SignUpSideEffect.Toast(
-                        when {
-                            response.userNumber != null -> R.string.sign_up_success
-                            response.code == "00" -> R.string.sign_up_user_exist
-                            response.code == "01" -> R.string.textfield_input_length
-                            else -> R.string.sign_up_failed
-                        }
+                ).onSuccess { response ->
+                    _signUpSideEffect.emit(
+                        SignUpSideEffect.Toast(R.string.sign_up_success)
                     )
-                )
-                if (response.userNumber != null) {
-                    _signUpSideEffect.emit(SignUpSideEffect.NavigateToSignIn)
+                    if (response.userNumber != null) {
+                        _signUpSideEffect.emit(SignUpSideEffect.NavigateToSignIn)
+                    }
+                }.onFailure {
+                    _signUpSideEffect.emit(SignUpSideEffect.Toast(R.string.sign_up_failed))
                 }
-            }.onFailure {
-                _signUpSideEffect.emit(SignUpSideEffect.Toast(R.string.sign_up_failed))
             }
         }
     }
 
     private fun isInputValid(text: String): Boolean =
         text.length <= MAX_LENGTH
-
-    private fun isEmailValid(email: String): Boolean =
-        email.matches(EMAIL_REGEX.toRegex())
 
     private fun isPasswordValid(password: String): Boolean {
         if (password.length <= MAX_LENGTH) {
@@ -118,7 +94,6 @@ class SignUpViewModel @Inject constructor(
         private const val PASSWORD_LENGTH_MAX = 20
         private const val PASSWORD_TYPE = 3
 
-        const val EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$"
         const val UPPER_CASE_REGEX = "[A-Z]"
         const val LOWER_CASE_REGEX = "[a-z]"
         const val NUMBER_REGEX = "[0-9]"

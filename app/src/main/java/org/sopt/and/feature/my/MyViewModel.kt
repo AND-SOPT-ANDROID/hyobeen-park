@@ -7,12 +7,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.sopt.and.core.state.UiState
-import org.sopt.and.domain.repository.MyRepository
+import org.sopt.and.domain.usecase.GetMyHobbyUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class MyViewModel @Inject constructor(
-    private val myRepository: MyRepository,
+    private val getMyHobbyUseCase: GetMyHobbyUseCase,
 ) : ViewModel() {
     var myState: MutableStateFlow<MyState> = MutableStateFlow(MyState())
         private set
@@ -21,7 +21,7 @@ class MyViewModel @Inject constructor(
         val token = sharedPreferences.getString("token", null) ?: ""
 
         viewModelScope.launch {
-            myRepository.getMyHobby(token)
+            getMyHobbyUseCase(token)
                 .onSuccess { response ->
                     myState.value = myState.value.copy(
                         hobby = UiState.Success(response.hobby)
