@@ -4,7 +4,7 @@ import org.sopt.and.domain.entitiy.my.HobbyModel
 import org.sopt.and.domain.repository.MyRepository
 import javax.inject.Inject
 
-class GetMyHobby @Inject constructor(
+class GetMyHobbyUseCase @Inject constructor(
     private val myRepository: MyRepository,
 ) {
     suspend operator fun invoke(
