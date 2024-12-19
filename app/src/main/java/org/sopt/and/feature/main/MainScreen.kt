@@ -77,7 +77,6 @@ fun MainScreen(
                 )
                 myNavGraph(
                     paddingValues = paddingValues,
-                    navHostController = navigator.navController,
                 )
 
                 signInNavGraph(

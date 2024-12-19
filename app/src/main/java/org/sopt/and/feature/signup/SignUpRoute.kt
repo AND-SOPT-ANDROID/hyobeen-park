@@ -23,7 +23,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -35,7 +34,6 @@ import org.sopt.and.core.designsystem.component.SocialLoginButton
 import org.sopt.and.core.designsystem.component.textfield.EmailTextField
 import org.sopt.and.core.designsystem.component.textfield.PasswordTextField
 import org.sopt.and.core.designsystem.component.topappbar.CloseButtonTopAppBar
-import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
 import org.sopt.and.core.extension.toast
 
 @Composable
@@ -45,32 +43,48 @@ fun SignUpRoute(
     navigateToSignIn: () -> Unit,
     popStackBack: () -> Unit,
 ) {
-    val signUpState by viewModel.signUpState.collectAsStateWithLifecycle()
-
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    LaunchedEffect(viewModel.signUpSideEffect, lifecycleOwner) {
-        viewModel.signUpSideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
+        viewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
             .collect { sideEffect ->
                 when (sideEffect) {
-                    is SignUpSideEffect.Toast -> context.toast(sideEffect.message)
-                    is SignUpSideEffect.NavigateToSignIn -> {
-                        context.toast(R.string.sign_up_success)
-                        navigateToSignIn()
-                    }
+                    is SignUpContract.SignUpSideEffect.ShowToast -> context.toast(sideEffect.message)
+                    is SignUpContract.SignUpSideEffect.NavigateToSignIn -> navigateToSignIn()
+                    is SignUpContract.SignUpSideEffect.NavigateUp -> popStackBack()
                 }
             }
     }
 
     SignUpScreen(
-        onSignUpButtonClick = viewModel::onSignUpClick,
-        onIdChange = viewModel::updateEmail,
-        onPasswordChange = viewModel::updatePassword,
-        onHobbyChange = viewModel::updateHobby,
+        onSignUpButtonClick = { viewModel.setEvent(SignUpContract.SignUpEvent.OnSignUpButtonClicked) },
+        onUsernameChange = { newValue ->
+            viewModel.setEvent(
+                SignUpContract.SignUpEvent.OnUsernameChanged(
+                    newValue
+                )
+            )
+        },
+        onPasswordChange = { newValue ->
+            viewModel.setEvent(
+                SignUpContract.SignUpEvent.OnPasswordChanged(
+                    newValue
+                )
+            )
+        },
+        onHobbyChange = { newValue ->
+            viewModel.setEvent(
+                SignUpContract.SignUpEvent.OnHobbyChanged(
+                    newValue
+                )
+            )
+        },
         onCloseButtonClick = popStackBack,
         modifier = modifier,
-        signUpState = signUpState,
+        uiState = uiState
     )
 
 }
@@ -78,12 +92,12 @@ fun SignUpRoute(
 @Composable
 fun SignUpScreen(
     onSignUpButtonClick: () -> Unit,
-    onIdChange: (String) -> Unit,
+    onUsernameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onHobbyChange: (String) -> Unit,
     onCloseButtonClick: () -> Unit,
+    uiState: SignUpContract.SignUpUiState,
     modifier: Modifier = Modifier,
-    signUpState: SignUpState,
 ) {
     Column(
         modifier = modifier
@@ -113,9 +127,9 @@ fun SignUpScreen(
         )
 
         EmailTextField(
-            email = signUpState.email,
+            email = uiState.username,
             hint = stringResource(R.string.sign_up_email_hint),
-            onValueChange = onIdChange,
+            onValueChange = onUsernameChange,
             modifier = Modifier
                 .padding(top = 30.dp)
                 .padding(horizontal = 20.dp),
@@ -141,7 +155,7 @@ fun SignUpScreen(
         }
 
         PasswordTextField(
-            password = signUpState.password,
+            password = uiState.password,
             hint = stringResource(R.string.sign_up_password_hint),
             onValueChange = onPasswordChange,
             modifier = Modifier
@@ -170,7 +184,7 @@ fun SignUpScreen(
         }
 
         EmailTextField(
-            email = signUpState.hobby,
+            email = uiState.hobby,
             hint = stringResource(R.string.sign_up_hobby_hint),
             onValueChange = onHobbyChange,
             modifier = Modifier
@@ -259,22 +273,6 @@ private fun SignUpTitle(
             text = greyText,
             fontSize = 20.sp,
             color = Color.Gray,
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SignInPreview() {
-    ANDANDROIDTheme {
-        SignUpScreen(
-            onSignUpButtonClick = { },
-            modifier = Modifier,
-            onIdChange = { },
-            onPasswordChange = { },
-            onHobbyChange = { },
-            onCloseButtonClick = { },
-            signUpState = SignUpState()
         )
     }
 }

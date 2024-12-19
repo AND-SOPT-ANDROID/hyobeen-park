@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -36,8 +35,8 @@ import org.sopt.and.core.designsystem.component.SocialLoginButton
 import org.sopt.and.core.designsystem.component.textfield.EmailTextField
 import org.sopt.and.core.designsystem.component.textfield.PasswordTextField
 import org.sopt.and.core.designsystem.component.topappbar.BackButtonTopAppBar
-import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
 import org.sopt.and.core.extension.toast
+import org.sopt.and.core.preference.PreferenceImpl.Companion.LocalPreference
 
 @Composable
 fun SignInRoute(
@@ -46,27 +45,26 @@ fun SignInRoute(
     viewModel: SignInViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
 ) {
-    val signInState by viewModel.signInState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
+    val preferences = LocalPreference.current
 
-    viewModel.initializePreferences(context)
-
-    LaunchedEffect(viewModel.signInSideEffect, lifecycleOwner) {
-        viewModel.signInSideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
+    LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
+        viewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
             .collect { sideEffect ->
                 when (sideEffect) {
-                    is SignInSideEffect.ShowToast -> {
+                    is SignInContract.SignInSideEffect.ShowToast -> {
                         context.toast(sideEffect.message)
                     }
 
-                    is SignInSideEffect.ShowSnackBar -> {}
-                    is SignInSideEffect.NavigateToSignUp -> {
+                    is SignInContract.SignInSideEffect.NavigateToSignUp -> {
                         navigateToSignUp()
                     }
 
-                    is SignInSideEffect.NavigateToHome -> {
+                    is SignInContract.SignInSideEffect.NavigateToHome -> {
+                        preferences.token = sideEffect.token
                         navigateToHome()
                     }
                 }
@@ -74,11 +72,19 @@ fun SignInRoute(
     }
 
     SignInScreen(
-        onSignUpButtonClick = viewModel::onSignUpButtonClick,
-        onSignInButtonClick = viewModel::signIn,
-        onIdChange = viewModel::updateEmail,
-        onPasswordChange = viewModel::updatePassword,
-        signInState = signInState,
+        onSignUpButtonClick = {
+            viewModel.setEvent(SignInContract.SignInEvent.OnSignUpButtonClicked)
+        },
+        onSignInButtonClick = {
+            viewModel.setEvent(SignInContract.SignInEvent.OnSignInButtonClicked)
+        },
+        onUsernameChange = { newValue ->
+            viewModel.setEvent(SignInContract.SignInEvent.OnUsernameChanged(newValue))
+        },
+        onPasswordChange = { newValue ->
+            viewModel.setEvent(SignInContract.SignInEvent.OnPasswordChanged(newValue))
+        },
+        signInState = uiState,
         modifier = modifier,
     )
 }
@@ -87,9 +93,9 @@ fun SignInRoute(
 fun SignInScreen(
     onSignInButtonClick: () -> Unit,
     onSignUpButtonClick: () -> Unit,
-    onIdChange: (String) -> Unit,
+    onUsernameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
-    signInState: SignInState,
+    signInState: SignInContract.SignInUiState,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -102,9 +108,9 @@ fun SignInScreen(
             onBackClick = {},
         )
         EmailTextField(
-            email = signInState.email,
+            email = signInState.username,
             hint = stringResource(R.string.sign_in_email),
-            onValueChange = onIdChange,
+            onValueChange = onUsernameChange,
             modifier = Modifier
                 .padding(top = 50.dp)
                 .padding(horizontal = 20.dp),
@@ -220,21 +226,6 @@ fun SignInScreen(
                     start = 20.dp,
                     end = 20.dp
                 ),
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SignInPreview() {
-    ANDANDROIDTheme {
-        SignInScreen(
-            onSignUpButtonClick = { },
-            onSignInButtonClick = { },
-            onIdChange = { },
-            onPasswordChange = { },
-            signInState = SignInState(),
-            modifier = Modifier,
         )
     }
 }
