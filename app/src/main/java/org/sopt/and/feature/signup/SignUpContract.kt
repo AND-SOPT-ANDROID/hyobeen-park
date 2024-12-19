@@ -7,14 +7,16 @@ import org.sopt.and.core.util.UiState
 
 class SignUpContract {
     data class SignUpUiState(
-        val email: String = "",
+        val username: String = "",
         val password: String = "",
         val hobby: String = "",
+        val isSignUpEnabled: Boolean = false,
     ) : UiState
 
     sealed interface SignUpSideEffect : UiSideEffect {
         data class ShowToast(@StringRes val message: Int) : SignUpSideEffect
         data object NavigateToSignIn : SignUpSideEffect
+        data object NavigateUp : SignUpSideEffect
     }
 
     sealed class SignUpEvent : UiEvent {
