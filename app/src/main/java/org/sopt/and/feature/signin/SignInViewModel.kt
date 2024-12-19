@@ -1,81 +1,52 @@
 package org.sopt.and.feature.signin
 
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.sopt.and.R
+import org.sopt.and.core.util.BaseViewModel
 import org.sopt.and.domain.usecase.PostSignInUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val postSignInUseCase: PostSignInUseCase,
-) : ViewModel() {
-    private val _signInState: MutableStateFlow<SignInState> = MutableStateFlow(SignInState())
-    val signInState get() = _signInState.asStateFlow()
+) : BaseViewModel<SignInContract.SignInUiState, SignInContract.SignInSideEffect, SignInContract.SignInEvent>() {
+    override fun createInitialState(): SignInContract.SignInUiState =
+        SignInContract.SignInUiState()
 
-    private val _signInSideEffect = MutableSharedFlow<SignInSideEffect>()
-    val signInSideEffect get() = _signInSideEffect.asSharedFlow()
+    override suspend fun handleEvent(event: SignInContract.SignInEvent) {
+        when (event) {
+            is SignInContract.SignInEvent.OnUsernameChanged -> {
+                setState { copy(username = event.username) }
+            }
 
-    private var sharedPreferences: SharedPreferences? = null
+            is SignInContract.SignInEvent.OnPasswordChanged -> {
+                setState { copy(password = event.password) }
+            }
 
-    fun onSignUpButtonClick() {
-        viewModelScope.launch {
-            _signInSideEffect.emit(SignInSideEffect.NavigateToSignUp)
-        }
-    }
+            is SignInContract.SignInEvent.OnSignInButtonClicked -> {
+                signIn()
+            }
 
-    fun signIn() {
-        viewModelScope.launch {
-            postSignInUseCase(
-                username = _signInState.value.email,
-                password = _signInState.value.password,
-            ).onSuccess { response ->
-                saveToken(response.token)
-                _signInSideEffect.emit(SignInSideEffect.NavigateToHome)
-            }.onFailure {
-                _signInSideEffect.emit(SignInSideEffect.ShowToast(R.string.sign_in_failed))
+            is SignInContract.SignInEvent.OnSignUpButtonClicked -> {
+                setSideEffect(SignInContract.SignInSideEffect.NavigateToSignUp)
             }
         }
     }
 
-    fun initializePreferences(context: Context) {
-        sharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
-    }
-
-    private fun saveToken(token: String) {
-        sharedPreferences?.edit()?.putString("token", token)?.apply()
-    }
-
-    fun updateEmail(email: String) {
-        _signInState.update {
-            it.copy(
-                email = email
-            )
-        }
-    }
-
-    fun updatePassword(password: String) {
-        _signInState.update {
-            it.copy(
-                password = password
-            )
-        }
-    }
-
-    fun updateToken(token: String) {
-        _signInState.update {
-            it.copy(
-                token = token
-            )
+    private fun signIn() = viewModelScope.launch {
+        with(currentState) {
+            postSignInUseCase(username, password)
+                .onSuccess { response ->
+                    setSideEffect(SignInContract.SignInSideEffect.NavigateToHome(response.token))
+                }.onFailure {
+                    setSideEffect(SignInContract.SignInSideEffect.ShowToast(R.string.sign_in_failed))
+                }
         }
     }
 }
