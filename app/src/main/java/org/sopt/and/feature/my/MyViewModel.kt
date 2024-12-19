@@ -10,13 +10,11 @@ import javax.inject.Inject
 @HiltViewModel
 class MyViewModel @Inject constructor(
     private val getMyHobbyUseCase: GetMyHobbyUseCase,
-) : BaseViewModel<MyContract.MyUiState, MyContract.MySideEffect, MyContract.MyEvent>() {
+) : BaseViewModel<MyContract.MyUiState, Nothing, Nothing>() {
     override fun createInitialState(): MyContract.MyUiState =
         MyContract.MyUiState()
 
-    override suspend fun handleEvent(event: MyContract.MyEvent) {
-
-    }
+    override suspend fun handleEvent(event: Nothing) {}
 
     fun getHobby(token: String) {
         viewModelScope.launch {

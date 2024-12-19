@@ -5,7 +5,6 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
@@ -21,7 +20,6 @@ fun NavController.navigateToMy(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.myNavGraph(
     paddingValues: PaddingValues,
-    navHostController: NavHostController,
 ) {
     composable<My>(
         exitTransition = {
@@ -39,7 +37,6 @@ fun NavGraphBuilder.myNavGraph(
     ) {
         MyRoute(
             paddingValues = paddingValues,
-            navController = navHostController
         )
     }
 }

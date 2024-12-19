@@ -19,16 +19,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import org.sopt.and.R
 import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
 import org.sopt.and.core.preference.PreferenceImpl.Companion.LocalPreference
@@ -38,7 +35,6 @@ import org.sopt.and.feature.my.component.MyPageTextButton
 @Composable
 fun MyRoute(
     paddingValues: PaddingValues,
-    navController: NavHostController,
     viewModel: MyViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -49,7 +45,8 @@ fun MyRoute(
     }
 
     MyScreen(
-        hobby = uiState.hobby
+        hobby = uiState.hobby,
+        modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
     )
 }
 
